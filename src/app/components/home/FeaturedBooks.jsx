@@ -5,7 +5,7 @@ import Link from "next/link";
 export default async function FeaturedBooks() {
   const books = await getBooks();
 
-  // Requirement: slice(0,3)
+
   const featured = books.slice(0, 4);
 
   return (
@@ -56,7 +56,7 @@ export default async function FeaturedBooks() {
 
                 {/* Routing to Details Page */}
                 <Link
-                  href={`/books/${book.id}`}
+                  href={`/all-books/${book.id}`}
                   className="block w-full text-center py-3 bg-[#fdfaf1] border-2 border-[#f4a261]/30 text-[#264653] font-bold rounded-xl hover:bg-[#e76f51] hover:text-white transition-all"
                 >
                   View Details
