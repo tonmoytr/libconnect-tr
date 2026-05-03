@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "The React Handbook",
+    "author": "Nicholas Tonmoy",
+    "description": "A comprehensive guide to mastering the MERN stack and Next.js for modern web development.",
+    "category": "Tech",
+    "available_quantity": 5,
+    "image_url": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400"
+  },
+  {
+    "id": 2,
+    "title": "Quantum Realms",
+    "author": "Dr. Sarah Chen",
+    "description": "Exploring the intersection of theoretical physics and modern computing architectures.",
+    "category": "Science",
+    "available_quantity": 3,
+    "image_url": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400"
+  },
+  {
+    "id": 3,
+    "title": "The Silent Archive",
+    "author": "Elena Rossi",
+    "description": "A gripping mystery set in a forgotten library where books hold more than just stories.",
+    "category": "Story",
+    "available_quantity": 8,
+    "image_url": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400"
+  },
+  {
+    "id": 4,
+    "title": "AI: The Final Frontier",
+    "author": "James Miller",
+    "description": "Understanding the ethical and technical implications of Artificial General Intelligence.",
+    "category": "Tech",
+    "available_quantity": 2,
+    "image_url": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400"
+  },
+  {
+    "id": 5,
+    "title": "Javascript Vibe",
+    "author": "Tonmoy",
+    "description": "The art of vibe-coding in Javascript: How intuition meets engineering to solve universal problems.",
+    "category": "Tech",
+    "available_quantity": 10,
+    "image_url": "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400"
+  },
+  {
+    "id": 6,
+    "title": "Cosmic Strings",
+    "author": "A. J. Astro",
+    "description": "An investigation into string theory and the fundamental fabric of our universe.",
+    "category": "Science",
+    "available_quantity": 4,
+    "image_url": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400"
+  },
+  {
+    "id": 7,
+    "title": "Logic First, Code Second",
+    "author": "Sohag Bhai",
+    "description": "Engineering permanent solutions by auditing workflows and identifying core friction points.",
+    "category": "Tech",
+    "available_quantity": 6,
+    "image_url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400"
+  },
+  {
+    "id": 8,
+    "title": "The Last Kingdom",
+    "author": "Bernard Cornwell",
+    "description": "An epic historical tale of the struggles to unite a divided land.",
+    "category": "Story",
+    "available_quantity": 12,
+    "image_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400"
+  },
+  {
+    "id": 9,
+    "title": "Next.js 16 Patterns",
+    "author": "Nicholas",
+    "description": "Advanced server component patterns for high-performance enterprise applications.",
+    "category": "Tech",
+    "available_quantity": 7,
+    "image_url": "https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=400"
+  },
+  {
+    "id": 10,
+    "title": "Micro-Habits",
+    "author": "James Clear",
+    "description": "Small daily changes that lead to remarkable results in learning and productivity.",
+    "category": "Story",
+    "available_quantity": 15,
+    "image_url": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400"
+  }
+]
