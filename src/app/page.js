@@ -1,9 +1,9 @@
-import { Button } from "@heroui/react";
+import Banner from "./components/home/Banner";
 
 export default function Home() {
   return (
     <main>
-      <Button variant="tertiary">Hello from Hero</Button>
+      <Banner />
     </main>
   );
 }

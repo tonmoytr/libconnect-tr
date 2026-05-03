@@ -16,53 +16,56 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-[#fdfaf1] border-b border-[#f4a261]/20 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Left: Logo */}
+        <div className="flex justify-between h-20 items-center">
+          {/* Left: Logo with e76f51 accents */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold tracking-tight">
-              <span className="text-blue-600">Lib</span>
-              <span className="text-gray-900">Connect</span>
+            <Link
+              href="/"
+              className="text-2xl font-black tracking-tighter flex items-center gap-1"
+            >
+              <span className="text-[#e76f51]">Lib</span>
+              <span className="text-[#264653]">Connect</span>
             </Link>
           </div>
 
           {/* Center: Desktop Navigation Links */}
-          <div className="hidden md:flex flex-1 justify-center space-x-8">
+          <div className="hidden md:flex flex-1 justify-center space-x-10">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-200"
+                className="text-[#264653] hover:text-[#e76f51] font-semibold transition-all duration-300 text-sm uppercase tracking-widest"
               >
                 {link.name}
               </Link>
             ))}
           </div>
 
-          {/* Right: Auth Buttons (Desktop) */}
+          {/* Right: Auth Buttons with f4a261 and e76f51 */}
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn ? (
               <>
                 <Link
                   href="/login"
-                  className="text-gray-700 hover:text-blue-600 font-medium px-3 py-2"
+                  className="text-[#e76f51] hover:text-[#f4a261] font-bold px-4 py-2 transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-sm"
+                  className="bg-[#e76f51] text-white px-6 py-2.5 rounded-full font-bold hover:bg-[#f4a261] transition-all shadow-md hover:shadow-[#f4a261]/20"
                 >
                   Sign Up
                 </Link>
               </>
             ) : (
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-semibold text-gray-700">
+              <div className="flex items-center gap-4 bg-[#f4a261]/10 px-4 py-2 rounded-full border border-[#f4a261]/20">
+                <span className="text-sm font-bold text-[#264653]">
                   {userName}
                 </span>
-                <button className="text-red-500 hover:text-red-700 font-medium text-sm border border-red-200 px-3 py-1 rounded-md hover:bg-red-50 transition-colors">
+                <button className="text-[#e76f51] hover:text-red-700 font-black text-xs uppercase tracking-tighter">
                   Logout
                 </button>
               </div>
@@ -73,10 +76,10 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-blue-600 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-[#e76f51] hover:bg-[#f4a261]/10 focus:outline-none"
             >
               <svg
-                className="h-6 w-6"
+                className="h-7 w-7"
                 stroke="currentColor"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -85,15 +88,15 @@ export default function Navbar() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                     d="M6 18L18 6M6 6l12 12"
                   />
                 ) : (
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16m-7 6h7"
+                    strokeWidth="2.5"
+                    d="M4 8h16M4 16h16"
                   />
                 )}
               </svg>
@@ -102,47 +105,38 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (Sand color) */}
       <div
-        className={`${isOpen ? "block" : "hidden"} md:hidden bg-white border-t border-gray-100 shadow-lg transition-all`}
+        className={`${isOpen ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0 pointer-events-none"} absolute w-full md:hidden bg-[#fdfaf1] border-t border-[#f4a261]/20 shadow-xl transition-all duration-300`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="px-4 pt-4 pb-6 space-y-2">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="block px-3 py-4 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+              className="block px-4 py-4 text-base font-bold text-[#264653] hover:text-[#e76f51] hover:bg-[#f4a261]/5 rounded-xl transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
           ))}
 
-          <hr className="my-2 border-gray-100" />
-
-          {!isLoggedIn ? (
-            <div className="grid grid-cols-2 gap-2 p-2">
-              <Link
-                href="/login"
-                className="text-center py-2 text-gray-700 font-medium border border-gray-200 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="text-center py-2 bg-blue-600 text-white font-medium rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Sign Up
-              </Link>
-            </div>
-          ) : (
-            <div className="px-3 py-4 flex justify-between items-center bg-gray-50 rounded-md">
-              <span className="font-semibold text-gray-800">{userName}</span>
-              <button className="text-red-500 font-bold">Logout</button>
-            </div>
-          )}
+          <div className="pt-4 mt-4 border-t border-[#f4a261]/20 grid grid-cols-2 gap-4">
+            <Link
+              href="/login"
+              className="text-center py-3 text-[#e76f51] font-bold border-2 border-[#e76f51] rounded-xl"
+              onClick={() => setIsOpen(false)}
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="text-center py-3 bg-[#e76f51] text-white font-bold rounded-xl"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
