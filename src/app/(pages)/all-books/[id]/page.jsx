@@ -2,16 +2,17 @@ import { getBooks } from "@/utils/getBooks";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { toast } from "react-toastify";
+import BorrowButton from "../components/BorrowButton";
 
 export default async function BookDetailsPage({ params }) {
   const { id } = await params;
   const books = await getBooks();
 
-  // Find the specific book based on the dynamic ID
   const book = books.find((b) => b.id.toString() === id);
 
   if (!book) {
-    notFound(); // Triggers your root not-found.tsx
+    notFound();
   }
 
   return (
@@ -77,9 +78,7 @@ export default async function BookDetailsPage({ params }) {
               </div>
             </div>
 
-            <button className="w-full bg-[#e76f51] text-white py-5 rounded-2xl font-black text-xl hover:bg-[#f4a261] transition-all shadow-xl shadow-[#e76f51]/20 active:scale-[0.98]">
-              Borrow This Book
-            </button>
+            <BorrowButton bookTitle={book.title} />
           </div>
         </div>
       </div>
