@@ -1,25 +1,35 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // For active link logic
+import { FaUserCircle, FaChevronDown } from "react-icons/fa"; // react-icons
+import Image from "next/image";
+import { authClient } from "@/utils/auth-client";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const pathname = usePathname();
 
-  // Static state for now
-  const isLoggedIn = false;
+  const { data: session } = authClient.useSession();
+
+  console.log(session);
+
+  // Functional placeholders - you will plug in useSession here
+  const isLoggedIn = true;
   const userName = "Tonmoy";
+  const userImage = ""; // Placeholder for photoUrl
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "All Books", href: "/all-books" },
-    { name: "My Profile", href: "/profile" },
   ];
 
   return (
     <nav className="bg-[#fdfaf1] border-b border-[#f4a261]/20 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          {/* Left: Logo with e76f51 accents */}
+          {/* 1. Left: Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               href="/"
@@ -30,113 +40,102 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Center: Desktop Navigation Links */}
+          {/* 2. Center: Navigation with Active Link Logic */}
           <div className="hidden md:flex flex-1 justify-center space-x-10">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-[#264653] hover:text-[#e76f51] font-semibold transition-all duration-300 text-sm uppercase tracking-widest"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`font-bold transition-all duration-300 text-sm uppercase tracking-widest ${
+                    isActive
+                      ? "text-[#e76f51] border-b-2 border-[#e76f51]"
+                      : "text-[#264653] hover:text-[#e76f51]"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Right: Auth Buttons with f4a261 and e76f51 */}
+          {/* 3. Right: Conditional Auth & Avatar Dropdown */}
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn ? (
               <>
                 <Link
                   href="/login"
-                  className="text-[#e76f51] hover:text-[#f4a261] font-bold px-4 py-2 transition-colors"
+                  className="text-[#e76f51] hover:text-[#f4a261] font-bold px-4 py-2"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="bg-[#e76f51] text-white px-6 py-2.5 rounded-full font-bold hover:bg-[#f4a261] transition-all shadow-md hover:shadow-[#f4a261]/20"
+                  className="bg-[#e76f51] text-white px-6 py-2.5 rounded-full font-bold hover:bg-[#f4a261] transition-all"
                 >
                   Sign Up
                 </Link>
               </>
             ) : (
-              <div className="flex items-center gap-4 bg-[#f4a261]/10 px-4 py-2 rounded-full border border-[#f4a261]/20">
-                <span className="text-sm font-bold text-[#264653]">
-                  {userName}
-                </span>
-                <button className="text-[#e76f51] hover:text-red-700 font-black text-xs uppercase tracking-tighter">
-                  Logout
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-3 bg-white px-3 py-1.5 rounded-full border border-[#f4a261]/30 hover:border-[#e76f51] transition-all"
+                >
+                  {/* Avatar Logic with Fallback */}
+                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#fdfaf1] bg-slate-100 flex items-center justify-center">
+                    {userImage ? (
+                      <Image
+                        src={userImage}
+                        alt={userName}
+                        fill
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                          e.target.nextSibling.style.display = "block";
+                        }}
+                      />
+                    ) : null}
+                    <FaUserCircle
+                      className={`text-[#264653]/40 w-full h-full ${userImage ? "hidden" : "block"}`}
+                    />
+                  </div>
+
+                  <span className="text-sm font-bold text-[#264653]">
+                    {userName}
+                  </span>
+                  <FaChevronDown
+                    className={`text-[#e76f51] text-xs transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-xl border border-[#f4a261]/10 py-2 animate-in fade-in zoom-in duration-200">
+                    <Link
+                      href="/profile"
+                      className="block px-6 py-3 text-sm font-bold text-[#264653] hover:bg-[#fdfaf1] hover:text-[#e76f51]"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <button
+                      className="w-full text-left px-6 py-3 text-sm font-bold text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors"
+                      onClick={() => {
+                        /* Logout Logic */ setIsDropdownOpen(false);
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[#e76f51] hover:bg-[#f4a261]/10 focus:outline-none"
-            >
-              <svg
-                className="h-7 w-7"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M4 8h16M4 16h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay (Sand color) */}
-      <div
-        className={`${isOpen ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0 pointer-events-none"} absolute w-full md:hidden bg-[#fdfaf1] border-t border-[#f4a261]/20 shadow-xl transition-all duration-300`}
-      >
-        <div className="px-4 pt-4 pb-6 space-y-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="block px-4 py-4 text-base font-bold text-[#264653] hover:text-[#e76f51] hover:bg-[#f4a261]/5 rounded-xl transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-
-          <div className="pt-4 mt-4 border-t border-[#f4a261]/20 grid grid-cols-2 gap-4">
-            <Link
-              href="/login"
-              className="text-center py-3 text-[#e76f51] font-bold border-2 border-[#e76f51] rounded-xl"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="text-center py-3 bg-[#e76f51] text-white font-bold rounded-xl"
-              onClick={() => setIsOpen(false)}
-            >
-              Sign Up
-            </Link>
-          </div>
+          {/* Mobile Toggle... */}
+          <div className="md:hidden">{/* [Existing Mobile Logic] */}</div>
         </div>
       </div>
     </nav>

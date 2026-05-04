@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/utils/auth-client";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const {
@@ -12,9 +14,23 @@ export default function LoginPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Login Data:", data);
-    // TODO: Integrate authClient.signIn.email() here
+    // console.log("Login Data:", data);
+    const { email, password } = data;
+
+    const { data: res, error } = await authClient.signIn.email({
+      email: email, // required
+      password: password, // required
+      rememberMe: true,
+      callbackURL: "/",
+    });
+    if (error) {
+      toast.error(error.message || "Login Failed");
+    }
   };
+
+  if (res) {
+    toast.success("Welcome to LibConnect!");
+  }
 
   return (
     <div className="min-h-screen bg-[#fdfaf1] flex items-center justify-center py-12 px-4">

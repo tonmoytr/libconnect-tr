@@ -3,17 +3,39 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/utils/auth-client";
+import { TbLoader3 } from "react-icons/tb";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Register Data:", data);
-    // TODO: Integrate authClient.signUp.email() here
+    const { name, email, password, photoUrl } = data;
+    // console.log(name);
+    
+    const { data: res, error } = await authClient.signUp.email({
+      name: name, // required
+      email: email, // required
+      password: password, // required
+      image: photoUrl,
+      callbackURL: "/login",
+    });
+    console.log(res, error);
+    if (error) {
+      toast.error(error.message || "Registration failed");
+    }
+    if (res) {
+      toast.success("Your account has been created successfully!");
+
+      router.push("/login");
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -129,9 +151,17 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full bg-[#e76f51] text-white py-4 rounded-xl font-black text-lg hover:bg-[#f4a261] transition-all shadow-lg shadow-[#e76f51]/20"
+            disabled={isSubmitting}
+            className="w-full bg-[#e76f51] text-white py-4 rounded-xl font-black text-lg hover:bg-[#f4a261] transition-all shadow-lg shadow-[#e76f51]/20 flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Register
+            {isSubmitting ? (
+              <>
+                <span>Creating Account...</span>
+                <TbLoader3 className="h-5 w-5 animate-spin" />
+              </>
+            ) : (
+              "Create Account"
+            )}
           </button>
         </form>
 
