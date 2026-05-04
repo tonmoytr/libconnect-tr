@@ -1,12 +1,20 @@
 export async function getBooks() {
-  // In production, use an absolute URL or a database call
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/data/allbooks.json`,
-    {
-      next: { revalidate: 3600 },
-    },
-  );
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://libconnect-trt.vercel.app");
 
-  if (!res.ok) return [];
-  return res.json();
+  try {
+    const res = await fetch(`${baseUrl}/data/allbooks.json`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch books data");
+
+    return await res.json();
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    return [];
+  }
 }
