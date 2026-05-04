@@ -52,7 +52,8 @@ export default async function AllBooksPage({ searchParams }) {
                       <Image
                         src={book.image_url}
                         alt={book.title}
-                        fill
+                        width={300}
+                        height={200}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-4 right-4 bg-[#e76f51] text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">

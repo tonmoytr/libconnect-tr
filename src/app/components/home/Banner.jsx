@@ -58,7 +58,8 @@ export default function Banner() {
                   <Image
                     src="/images/1.jpg"
                     alt="Book Cover 1"
-                    fill
+                    height={550}
+                    width={450}
                     className="object-cover rounded-xl border-4 border-white shadow-lg"
                   />
                 </div>
@@ -68,7 +69,8 @@ export default function Banner() {
                   <Image
                     src="/images/2.jpg"
                     alt="Book Cover 2"
-                    fill
+                    height={550}
+                    width={450}
                     className="object-cover rounded-xl border-4 border-white shadow-lg"
                   />
                 </div>
@@ -78,7 +80,8 @@ export default function Banner() {
                   <Image
                     src="/images/3.jpg"
                     alt="Book Cover 3"
-                    fill
+                    height={550}
+                    width={450}
                     className="object-cover rounded-xl border-4 border-white shadow-2xl"
                   />
                   {/* Glossy Overlay for that "Unique Design" requirement */}
