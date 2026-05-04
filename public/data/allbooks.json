@@ -88,5 +88,23 @@
     "category": "Story",
     "available_quantity": 15,
     "image_url": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400"
+  },
+  {
+    "id": 11,
+    "title": "Deep Learning Simplified",
+    "author": "Andrew K. Rahman",
+    "description": "A beginner-friendly guide to understanding neural networks and deep learning concepts without heavy math.",
+    "category": "Science",
+    "available_quantity": 6,
+    "image_url": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400"
+  },
+  {
+    "id": 12,
+    "title": "The Midnight Algorithm",
+    "author": "Lina Verma",
+    "description": "A techno-thriller where a rogue algorithm begins predicting—and manipulating—the future.",
+    "category": "Story",
+    "available_quantity": 9,
+    "image_url": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=400"
   }
 ]
