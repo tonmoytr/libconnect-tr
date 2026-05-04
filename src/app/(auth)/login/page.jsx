@@ -5,8 +5,11 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/utils/auth-client";
 import { toast } from "react-toastify";
+import { HiEye, HiEyeOff } from "react-icons/hi";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,14 +26,13 @@ export default function LoginPage() {
       rememberMe: true,
       callbackURL: "/",
     });
+    if (res) {
+      toast.success("Welcome to LibConnect!");
+    }
     if (error) {
       toast.error(error.message || "Login Failed");
     }
   };
-
-  if (res) {
-    toast.success("Welcome to LibConnect!");
-  }
 
   return (
     <div className="min-h-screen bg-[#fdfaf1] flex items-center justify-center py-12 px-4">
@@ -68,16 +70,35 @@ export default function LoginPage() {
             <label className="block text-sm font-bold text-[#264653] mb-1">
               Password
             </label>
-            <input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-              className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all ${
-                errors.password
-                  ? "border-red-400"
-                  : "border-[#f4a261]/20 focus:border-[#e76f51]"
-              }`}
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"} // Dynamic type switching
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: { value: 6, message: "Minimum 6 characters" },
+                })}
+                className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all ${
+                  errors.password
+                    ? "border-red-400"
+                    : "border-[#f4a261]/20 focus:border-[#e76f51]"
+                }`}
+                placeholder="••••••••"
+              />
+
+              {/* Eye Icon Toggle */}
+              <button
+                type="button" // Important: prevents form submission on click
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#264653]/40 hover:text-[#e76f51] transition-colors"
+              >
+                {showPassword ? (
+                  <HiEye size={20} /> // Opened Eye
+                ) : (
+                  <HiEyeOff size={20} /> // Closed Eye
+                )}
+              </button>
+            </div>
+
             {errors.password && (
               <p className="text-red-500 text-xs mt-1 font-bold">
                 {errors.password.message}

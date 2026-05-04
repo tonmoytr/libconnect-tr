@@ -5,20 +5,22 @@ import { usePathname } from "next/navigation"; // For active link logic
 import { FaUserCircle, FaChevronDown } from "react-icons/fa"; // react-icons
 import Image from "next/image";
 import { authClient } from "@/utils/auth-client";
+import { Spinner } from "@heroui/react";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
 
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
 
-  console.log(session);
+  // console.log(session);
 
   // Functional placeholders - you will plug in useSession here
-  const isLoggedIn = true;
-  const userName = "Tonmoy";
-  const userImage = ""; // Placeholder for photoUrl
+  const isLoggedIn = !!session;
+  const userName = session?.user?.name || "Tonmoy";
+  const userImage = session?.user?.image || "";
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -62,19 +64,26 @@ export default function Navbar() {
 
           {/* 3. Right: Conditional Auth & Avatar Dropdown */}
           <div className="hidden md:flex items-center space-x-4">
-            {!isLoggedIn ? (
+            {isPending ? (
               <>
-                <Link
+                <div className="flex flex-col items-center gap-2">
+                  <Spinner color="success" />
+                  <span className="text-xs text-muted">Success</span>
+                </div>
+              </>
+            ) : !isLoggedIn ? (
+              <>
+                {/* <Link
                   href="/login"
                   className="text-[#e76f51] hover:text-[#f4a261] font-bold px-4 py-2"
                 >
                   Login
-                </Link>
+                </Link> */}
                 <Link
-                  href="/register"
+                  href="/login"
                   className="bg-[#e76f51] text-white px-6 py-2.5 rounded-full font-bold hover:bg-[#f4a261] transition-all"
                 >
-                  Sign Up
+                  Sign In
                 </Link>
               </>
             ) : (
@@ -89,7 +98,9 @@ export default function Navbar() {
                       <Image
                         src={userImage}
                         alt={userName}
-                        fill
+                        height={40}
+                        width={40}
+                        unoptimized
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.target.style.display = "none";
@@ -122,8 +133,10 @@ export default function Navbar() {
                     </Link>
                     <button
                       className="w-full text-left px-6 py-3 text-sm font-bold text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors"
-                      onClick={() => {
-                        /* Logout Logic */ setIsDropdownOpen(false);
+                      onClick={async () => {
+                        await authClient.signOut();
+                        toast.success("Logged out successfully!");
+                        setIsDropdownOpen(false);
                       }}
                     >
                       Logout
