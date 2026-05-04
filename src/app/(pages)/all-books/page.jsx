@@ -4,7 +4,7 @@ import Image from "next/image";
 import SearchBar from "./components/SearchBar";
 
 export default async function AllBooksPage({ searchParams }) {
-  // Await params as per Next.js 15 standards
+
   const { search } = await searchParams;
   const allBooks = await getBooks();
 
@@ -78,12 +78,12 @@ export default async function AllBooksPage({ searchParams }) {
             <p className="text-[#264653]/60 text-xl font-bold">
               No books found for &quot;{search}&quot;.
             </p>
-            <Link
+            {/* <Link
               href="/all-books"
               className="text-[#e76f51] font-black uppercase text-sm mt-4 inline-block hover:underline"
             >
               Clear Search
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
