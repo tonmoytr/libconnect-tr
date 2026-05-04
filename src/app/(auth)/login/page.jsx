@@ -34,6 +34,13 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log(data);
+  };
+
   return (
     <div className="min-h-screen bg-[#fdfaf1] flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl border border-[#f4a261]/20 p-10">
@@ -110,13 +117,13 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-[#e76f51] text-white py-4 rounded-xl font-black text-lg hover:bg-[#f4a261] transition-all shadow-lg shadow-[#e76f51]/20"
           >
-            Login
+            Sign In
           </button>
         </form>
 
         <div className="mt-8">
           <button
-            onClick={() => console.log("Google Login")}
+            onClick={handleGoogleLogin}
             className="w-full flex items-center justify-center gap-3 bg-white border-2 border-[#f4a261]/20 py-3 rounded-xl font-bold text-[#264653] hover:bg-[#fdfaf1] transition-all"
           >
             <FcGoogle size={24} /> Sign in with Google
