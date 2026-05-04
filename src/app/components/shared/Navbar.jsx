@@ -116,7 +116,7 @@ export default function Navbar() {
                       </p>
                     </div> */}
                     <Link
-                      href="/profile"
+                      href="/my-profile"
                       className="block px-5 py-2.5 text-sm font-bold text-[#264653] hover:text-[#e76f51]"
                       onClick={() => setIsProfileOpen(false)}
                     >
